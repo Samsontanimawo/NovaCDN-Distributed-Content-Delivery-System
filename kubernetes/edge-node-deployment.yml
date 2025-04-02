@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novacdn-edge-node
+spec:
+  replicas: 10  # Number of edge nodes
+  selector:
+    matchLabels:
+      app: novacdn-edge-node
+  template:
+    metadata:
+      labels:
+        app: novacdn-edge-node
+    spec:
+      containers:
+        - name: edge-node
+          image: novacdn-edge:latest  # Replace with your edge node image
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NODE_ENV
+              value: "production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: novacdn-edge-node
+spec:
+  selector:
+    app: novacdn-edge-node
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

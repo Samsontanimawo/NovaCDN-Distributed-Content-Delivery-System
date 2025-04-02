@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novacdn-nginx
+spec:
+  replicas: 1  # Scale up as needed
+  selector:
+    matchLabels:
+      app: novacdn-nginx
+  template:
+    metadata:
+      labels:
+        app: novacdn-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config  # Reference the external ConfigMap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: novacdn-nginx
+spec:
+  selector:
+    app: novacdn-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

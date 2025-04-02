@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novacdn-backend
+  namespace: default  # Ensure the correct namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: novacdn-backend
+  template:
+    metadata:
+      labels:
+        app: novacdn-backend
+    spec:
+      containers:
+        - name: backend
+          image: engrtanimawo244/novacdn-backend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+      imagePullSecrets:
+        - name: regcred  # The secret for accessing the private image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: novacdn-backend
+spec:
+  selector:
+    app: novacdn-backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
