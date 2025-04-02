@@ -1,4 +1,4 @@
-# NovaCDN - Content Delivery Network (CDN) with Docker, Nginx, Node.js, and Redis
+# NovaCDN - Content Delivery Network (CDN) with Docker, Kubernetes, Nginx, Node.js, and Redis
 
 NovaCDN is a demonstration project designed to showcase a Content Delivery Network (CDN) built with modern technologies such as Docker, Nginx, Node.js, and Redis. It simulates edge nodes for caching and load balancing, and demonstrates how to deploy a scalable system to deliver content efficiently across multiple nodes.
 
@@ -8,7 +8,7 @@ NovaCDN is a demonstration project designed to showcase a Content Delivery Netwo
 - **novacdn-frontend/**: React-based frontend application for user interaction.
 - **nginx/**: Nginx configuration files for reverse proxy and load balancing.
 - **novacdn-nodes/**: Simulated CDN edge servers for content caching.
-- **docker-compose.yml**: Docker Compose configuration for setting up the multi-container environment.
+- **docker-compose.yml**: Docker Compose configuration sets up the multi-container environment.
 - **docker-stack.yml**: Docker Swarm stack file for managing the services in Swarm mode.
 - **README.md**: This documentation file.
 
