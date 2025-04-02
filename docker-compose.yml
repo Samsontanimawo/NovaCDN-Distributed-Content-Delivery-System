@@ -4,9 +4,8 @@ services:
   # Backend Service
   backend:
     build:
-      context: ./backend  # Path to your backend folder
-    ports:
-      - "3000:3000"        # Expose backend port (3000)
+      context: ./backend
+    
     depends_on:
       - redis
     networks:

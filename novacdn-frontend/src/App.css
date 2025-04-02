@@ -1,28 +1,40 @@
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 }
 
 .content-request {
-  margin: 20px 0;
-}
-
-input {
-  padding: 10px;
-  font-size: 16px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 20px;
 }
 
 button {
@@ -47,4 +59,29 @@ button:hover {
   width: 80%;
   max-width: 600px;
   word-wrap: break-word;
+}
+
+.content-history {
+  margin-top: 40px;
+  width: 80%;
+  max-width: 800px;
+}
+
+.MuiCard-root {
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.MuiCardContent-root {
+  padding: 10px;
+}
+
+.MuiTypography-root {
+  font-size: 1.1rem;
+}
+
+.MuiCircularProgress-root {
+  color: #ffffff;
 }
