@@ -16,7 +16,7 @@ function App() {
   const [contentHistory, setContentHistory] = useState([]);
   const [cache, setCache] = useState({});
   const [stars, setStars] = useState([]);
-  const [hasFetched, setHasFetched] = useState(false); // Track fetch click
+  const [hasFetched, setHasFetched] = useState(false); // Placeholder toggle
 
   const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
 
@@ -153,30 +153,28 @@ function App() {
 
   return (
     <div className="App">
-      {/* Starfield background */}
+      {/* Animated Star Background */}
       <div className="starfield">
         {stars.map((star) => (
           <div
             key={star.id}
-            className="star"
+            className={`star ${star.color}`}
             style={{
               left: `${star.left}vw`,
               top: `-${Math.random() * 100}vh`,
               animationDelay: `${star.delay}s`,
               animationDuration: `${star.duration}s`,
-              backgroundColor: star.color,
             }}
           />
         ))}
       </div>
 
       <header className="App-header">
-      <h1>
-  Welcome to Nova
-  <span className="bounce-rocket">🚀</span>
-  CDN
-</h1>
-
+        <h1>
+          Welcome to Nova
+          <span className="bounce-rocket">🚀</span>
+          CDN
+        </h1>
         <p>Enter a file name (e.g., flow.mp3, CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
 
         <div
@@ -209,6 +207,7 @@ function App() {
               shrink: false,
             }}
           />
+
           <Button
             variant="contained"
             onClick={fetchContent}
@@ -250,22 +249,16 @@ function App() {
         </div>
       </header>
 
-      <footer
-        style={{
-          marginTop: "40px",
-          padding: "20px",
-          textAlign: "center",
-          color: "#fff",
-          background: "linear-gradient(135deg, #0d47a1, #1976d2)",
-        }}
-      >
-        <p style={{ fontSize: "0.95rem", marginTop: "10px", fontWeight: "bold" }}>
-          Project by Samson Tanimawo
-        </p>
-        <p style={{ fontSize: "0.95rem", marginTop: "10px", fontWeight: "bold" }}>
-          💻 Built with React, Node.js, Docker, Kubernetes, AWS, Nginx, Redis, Git,
-          Prometheus, Grafana, Splunk, and ❤️
-        </p>
+      <footer className="App-footer">
+        <div className="footer-container">
+          <p className="footer-author">Project by Samson Tanimawo</p>
+          <div className="scroll-container">
+            <p className="scrolling-tech">
+              💻 Built with React, Node.js, Docker, Kubernetes, AWS, Nginx, Redis, Git,
+              Prometheus, Grafana, Splunk, and ❤️
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
   );

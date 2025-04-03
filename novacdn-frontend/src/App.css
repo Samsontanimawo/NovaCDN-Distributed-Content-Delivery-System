@@ -136,8 +136,7 @@ iframe {
   color: #ffca28;
 }
 
-
-/* Animated Starfield Background */
+/* Starfield background */
 .starfield {
   position: fixed;
   top: 0;
@@ -149,7 +148,6 @@ iframe {
   overflow: hidden;
 }
 
-/* Base star style */
 .star {
   position: absolute;
   width: 2px;
@@ -159,22 +157,11 @@ iframe {
   animation: moveStar linear infinite;
 }
 
-/* Different colored stars */
-.star.white {
-  background: white;
-}
-.star.red {
-  background: red;
-}
-.star.blue {
-  background: #00bfff;
-}
-.star.purple {
-  background: #b388ff;
-}
-.star.yellow {
-  background: #ffff66;
-}
+.star.white { background: white; }
+.star.red { background: red; }
+.star.blue { background: #00bfff; }
+.star.purple { background: #b388ff; }
+.star.yellow { background: #ffff66; }
 
 @keyframes moveStar {
   from {
@@ -187,14 +174,52 @@ iframe {
   }
 }
 
-.footer {
-  margin-top: 50px;
-  padding: 30px;
-  color: #fff;
+/* Footer container and alignment */
+.App-footer {
+  margin-top: 40px;
+  padding: 20px;
   text-align: center;
-  font-size: 0.9rem;
-  border-radius: 8px;
   background: linear-gradient(135deg, #0d47a1, #1976d2);
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 20px;
+}
+
+.footer-author {
+  font-size: 0.95rem;
+  margin-top: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.scroll-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-top: 8px;
+}
+
+.scrolling-tech {
+  display: inline-block;
+  padding-left: 100%;
+  font-weight: bold;
+  color: white;
+  animation: scroll-left-right 20s linear infinite;
+}
+
+@keyframes scroll-left-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes bounceRocket {
