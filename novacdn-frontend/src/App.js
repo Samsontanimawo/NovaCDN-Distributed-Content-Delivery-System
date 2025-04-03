@@ -16,6 +16,7 @@ function App() {
   const [contentHistory, setContentHistory] = useState([]);
   const [cache, setCache] = useState({});
   const [stars, setStars] = useState([]);
+  const [hasFetched, setHasFetched] = useState(false); // Track fetch click
 
   const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
 
@@ -128,6 +129,7 @@ function App() {
   };
 
   const fetchContent = async () => {
+    setHasFetched(true);
     setLoading(true);
     const fileType = getFileType(contentId);
     const folder = getS3Path(fileType);
@@ -169,16 +171,43 @@ function App() {
       </div>
 
       <header className="App-header">
-        <h1> Welcome to Nova🚀CDN </h1>
+      <h1>
+  Welcome to Nova
+  <span className="bounce-rocket">🚀</span>
+  CDN
+</h1>
+
         <p>Enter a file name (e.g., flow.mp3, CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
 
-        <div className="content-request">
+        <div
+          className="content-request"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "40px",
+          }}
+        >
           <TextField
-            label="Enter File Name"
+            label={!hasFetched ? "Enter File Name" : ""}
+            placeholder={!hasFetched ? "Enter file name" : ""}
             variant="outlined"
             value={contentId}
             onChange={(e) => setContentId(e.target.value)}
             fullWidth
+            style={{ maxWidth: "400px" }}
+            InputProps={{
+              style: {
+                textAlign: "center",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                left: "50%",
+                transform: "translateX(-50%)",
+              },
+              shrink: false,
+            }}
           />
           <Button
             variant="contained"
@@ -196,7 +225,8 @@ function App() {
         </div>
 
         <div className="content-history">
-          <h2>Content History</h2>
+          <h2 style={{ color: "#000000", fontWeight: "bold" }}>Content History</h2>
+
           {contentHistory.length > 0 ? (
             contentHistory.map((item, index) => (
               <Card key={index} sx={{ marginBottom: "15px" }}>
@@ -213,31 +243,30 @@ function App() {
               </Card>
             ))
           ) : (
-            <Typography>No content history available.</Typography>
+            <Typography style={{ color: "#fff" }}>
+              No content history available.
+            </Typography>
           )}
         </div>
       </header>
 
       <footer
-  style={{
-    marginTop: "40px",
-    padding: "20px",
-    textAlign: "center",
-    color: "#fff",
-    background: "linear-gradient(135deg, #0d47a1, #1976d2)", // Same as App-header
-  }}
->
-  <p style={{ fontSize: "0.95rem", marginTop: "10px" }}>
-    <strong>Project by Samson Tanimawo</strong>
-  </p>
-  <p style={{ fontSize: "0.95rem", marginTop: "10px" }}>
-    <strong>💻 Built with</strong> <strong>React</strong>, <strong>Node.js</strong>, <strong>Docker</strong>,{" "}
-    <strong>Kubernetes</strong>, <strong>AWS</strong>, <strong>Nginx</strong>,{" "}
-    <strong>Redis</strong>, <strong>Git</strong>, <strong>Prometheus</strong>,{" "}
-    <strong>Grafana</strong>, <strong>Splunk</strong>, <strong>and</strong> ❤️
-  </p>
-</footer>
-
+        style={{
+          marginTop: "40px",
+          padding: "20px",
+          textAlign: "center",
+          color: "#fff",
+          background: "linear-gradient(135deg, #0d47a1, #1976d2)",
+        }}
+      >
+        <p style={{ fontSize: "0.95rem", marginTop: "10px", fontWeight: "bold" }}>
+          Project by Samson Tanimawo
+        </p>
+        <p style={{ fontSize: "0.95rem", marginTop: "10px", fontWeight: "bold" }}>
+          💻 Built with React, Node.js, Docker, Kubernetes, AWS, Nginx, Redis, Git,
+          Prometheus, Grafana, Splunk, and ❤️
+        </p>
+      </footer>
     </div>
   );
 }

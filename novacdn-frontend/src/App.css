@@ -193,5 +193,20 @@ iframe {
   color: #fff;
   text-align: center;
   font-size: 0.9rem;
+  border-radius: 8px;
   background: linear-gradient(135deg, #0d47a1, #1976d2);
+}
+
+@keyframes bounceRocket {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce-rocket {
+  display: inline-block;
+  animation: bounceRocket 1.5s ease-in-out infinite;
 }
