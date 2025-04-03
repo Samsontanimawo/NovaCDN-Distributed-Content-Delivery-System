@@ -6,7 +6,7 @@ import {
   CircularProgress,
   Card,
   CardContent,
-  Typography
+  Typography,
 } from "@mui/material";
 
 function App() {
@@ -14,120 +14,87 @@ function App() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [contentHistory, setContentHistory] = useState([]);
-  const [cache, setCache] = useState({}); // Track cached files
+  const [cache, setCache] = useState({});
 
   const getFileType = (id) => {
     const lower = id.toLowerCase();
-    if (/\.(png|jpg|jpeg|gif)$/i.test(lower)) return "image";
     if (/\.(mp4|webm|ogg)$/i.test(lower)) return "video";
-    if (/\.(mp3|wav)$/i.test(lower)) return "audio";
-    if (/\.(pdf|doc|docx|txt|csv)$/i.test(lower)) return "document";
     return "text";
   };
 
   const getFolderPath = (fileType) => {
     switch (fileType) {
-      case "image":
-        return "/images/";
       case "video":
         return "/video/";
-      case "audio":
-        return "/audio/";
-      case "document":
-        return "/documents/";
       default:
         return "/";
     }
   };
 
+  const renderAndStore = (basePath, fileType, isCached, latency) => {
+    const statusMessage = isCached
+      ? "You are now accessing cached data!"
+      : "This content was retrieved from our primary database.";
+
+    let renderComponent;
+    switch (fileType) {
+      case "video":
+        renderComponent = (
+          <>
+            <p>{statusMessage}</p>
+            <video controls style={{ maxWidth: "100%" }}>
+              <source src={basePath} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <p>Latency: {latency}ms</p>
+          </>
+        );
+        break;
+      default:
+        renderComponent = "Content not found or unsupported type.";
+    }
+
+    setContent(renderComponent);
+    setCache((prev) => ({ ...prev, [contentId]: true }));
+    setContentHistory((prev) => [
+      ...prev,
+      {
+        id: contentId,
+        content: renderComponent,
+        timestamp: new Date().toLocaleString(),
+      },
+    ]);
+    setLoading(false);
+  };
+
   const fetchContent = async () => {
     setLoading(true);
+    const fileType = getFileType(contentId);
+    const folderPath = getFolderPath(fileType);
+    const basePath = folderPath + contentId;
+    const isCached = cache[contentId];
+    const start = performance.now();
 
-    setTimeout(() => {
-      const fileType = getFileType(contentId);
-      const folderPath = getFolderPath(fileType);
-      const basePath = folderPath + contentId;
-
-      const isCached = cache[contentId];
-      const statusMessage = isCached
-        ? "You are now accessing cached data!"
-        : "This is sample content from our CDN.";
-
-      let renderComponent;
-
-      switch (fileType) {
-        case "image":
-          renderComponent = (
-            <>
-              <p>{statusMessage}</p>
-              <img src={basePath} alt={contentId} />
-            </>
-          );
-          break;
-        case "video":
-          renderComponent = (
-            <>
-              <p>{statusMessage}</p>
-              <video controls>
-                <source src={basePath} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </>
-          );
-          break;
-        case "audio":
-          renderComponent = (
-            <>
-              <p>{statusMessage}</p>
-              <audio controls>
-                <source src={basePath} type="audio/mp3" />
-                Your browser does not support the audio element.
-              </audio>
-            </>
-          );
-          break;
-        case "document":
-          renderComponent = (
-            <>
-              <p>{statusMessage}</p>
-              <a href={basePath} download style={{ color: "#61dafb" }}>
-                Click to download {contentId}
-              </a>
-            </>
-          );
-          break;
-        default:
-          const textContent = {
-            "1": "Content for ID 1: Welcome to the NovaCDN simulation!",
-            "2": "Content for ID 2: This is sample content from our CDN.",
-            "3": "Content for ID 3: You are now accessing cached data!"
-          };
-          renderComponent = textContent[contentId] || "Content not found!";
-      }
-
-      setContent(renderComponent);
-
-      // Update cache
-      setCache((prev) => ({ ...prev, [contentId]: true }));
-
-      setContentHistory((prev) => [
-        ...prev,
-        {
-          id: contentId,
-          content: renderComponent,
-          timestamp: new Date().toLocaleString()
-        }
-      ]);
-
-      setLoading(false);
-    }, 1000);
+    if (isCached) {
+      // Cached: no delay, but measure time to render
+      requestAnimationFrame(() => {
+        const latency = Math.round(performance.now() - start);
+        renderAndStore(basePath, fileType, true, latency);
+      });
+    } else {
+      // Not cached: simulate DB fetch with delay
+      setTimeout(() => {
+        const latency = Math.round(performance.now() - start);
+        renderAndStore(basePath, fileType, false, latency);
+      }, 500);
+    }
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome to NovaCDN Simulation</h1>
-        <p>Enter file name (e.g., audio.mp3, river.mp4, cnd.png, doc1.pdf...)</p>
+        <h1>💡Welcome to NovaCDN 🌍</h1>
+        <p>Enter video file name (e.g., CDN Explained.mp4, river.mp4...)</p>
 
         <div className="content-request">
           <TextField
@@ -160,7 +127,10 @@ function App() {
                 <CardContent>
                   <Typography variant="h6">File: {item.id}</Typography>
                   <div>{item.content}</div>
-                  <Typography variant="caption" sx={{ display: "block", marginTop: "10px" }}>
+                  <Typography
+                    variant="caption"
+                    sx={{ display: "block", marginTop: "10px" }}
+                  >
                     {item.timestamp}
                   </Typography>
                 </CardContent>
@@ -171,6 +141,19 @@ function App() {
           )}
         </div>
       </header>
+
+      <footer
+        style={{
+          marginTop: "40px",
+          padding: "20px",
+          textAlign: "center",
+          color: "#000",
+        }}
+      >
+        <p>
+          Project by <strong>Samson Tanimawo</strong>
+        </p>
+      </footer>
     </div>
   );
 }
