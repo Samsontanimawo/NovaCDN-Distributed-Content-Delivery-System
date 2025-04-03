@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import {
   Button,
@@ -15,8 +15,20 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [contentHistory, setContentHistory] = useState([]);
   const [cache, setCache] = useState({});
+  const [stars, setStars] = useState([]);
 
   const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
+
+  useEffect(() => {
+    const generatedStars = Array.from({ length: 150 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 5 + Math.random() * 5,
+      color: ["red", "blue", "purple", "white"][Math.floor(Math.random() * 4)],
+    }));
+    setStars(generatedStars);
+  }, []);
 
   const getFileType = (id) => {
     const lower = id.toLowerCase();
@@ -63,19 +75,18 @@ function App() {
         );
         break;
 
-        case "audio":
-          renderComponent = (
-            <>
-              <p>{statusMessage}</p>
-              <audio controls>
-                <source src={url} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
-              <p>Latency: {latency}ms</p>
-            </>
-          );
-          break;
-        
+      case "audio":
+        renderComponent = (
+          <>
+            <p>{statusMessage}</p>
+            <audio controls>
+              <source src={url} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+            <p>Latency: {latency}ms</p>
+          </>
+        );
+        break;
 
       case "image":
         renderComponent = (
@@ -134,15 +145,31 @@ function App() {
       setTimeout(() => {
         const latency = Math.round(performance.now() - start);
         renderAndStore(fileUrl, fileType, false, latency);
-      }, 500); // Simulated latency
+      }, 500);
     }
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-      <h1> Welcome to Nova🚀CDN </h1>
+      {/* Starfield background */}
+      <div className="starfield">
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="star"
+            style={{
+              left: `${star.left}vw`,
+              top: `-${Math.random() * 100}vh`,
+              animationDelay: `${star.delay}s`,
+              animationDuration: `${star.duration}s`,
+              backgroundColor: star.color,
+            }}
+          />
+        ))}
+      </div>
 
+      <header className="App-header">
+        <h1> Welcome to Nova🚀CDN </h1>
         <p>Enter a file name (e.g., flow.mp3, CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
 
         <div className="content-request">
@@ -196,14 +223,18 @@ function App() {
     marginTop: "40px",
     padding: "20px",
     textAlign: "center",
-    color: "#000",
+    color: "#fff",
+    background: "linear-gradient(135deg, #0d47a1, #1976d2)", // Same as App-header
   }}
 >
   <p style={{ fontSize: "0.95rem", marginTop: "10px" }}>
-  <strong>Project by Samson Tanimawo</strong>
+    <strong>Project by Samson Tanimawo</strong>
   </p>
   <p style={{ fontSize: "0.95rem", marginTop: "10px" }}>
-  <strong>💻 Built with</strong> <strong>React</strong>, <strong>Node.js</strong>, <strong>Docker</strong>, <strong>Kubernetes</strong>, <strong>AWS</strong>, <strong>Nginx</strong>, <strong>Redis</strong>, <strong>Git</strong>, <strong>Prometheus</strong>, <strong>Grafana</strong>, <strong>Splunk</strong>, <strong>and</strong> ❤️
+    <strong>💻 Built with</strong> <strong>React</strong>, <strong>Node.js</strong>, <strong>Docker</strong>,{" "}
+    <strong>Kubernetes</strong>, <strong>AWS</strong>, <strong>Nginx</strong>,{" "}
+    <strong>Redis</strong>, <strong>Git</strong>, <strong>Prometheus</strong>,{" "}
+    <strong>Grafana</strong>, <strong>Splunk</strong>, <strong>and</strong> ❤️
   </p>
 </footer>
 
