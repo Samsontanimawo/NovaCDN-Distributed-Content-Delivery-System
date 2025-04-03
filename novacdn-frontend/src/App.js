@@ -16,20 +16,36 @@ function App() {
   const [contentHistory, setContentHistory] = useState([]);
   const [cache, setCache] = useState({});
 
+  const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
+
   const getFileType = (id) => {
     const lower = id.toLowerCase();
     if (/\.(mp4|webm|ogg)$/i.test(lower)) return "video";
+    if (/\.(png|jpg|jpeg|gif|webp)$/i.test(lower)) return "image";
+    if (/\.(mp3|wav|aac)$/i.test(lower)) return "audio";
+    if (/\.(pdf|docx?|txt|csv)$/i.test(lower)) return "document";
     return "text";
   };
 
-  const getVideoS3Url = (filename) => {
-    return `https://novacdn-videos.s3.amazonaws.com/videos/${encodeURIComponent(filename)}`;
+  const getS3Path = (type) => {
+    switch (type) {
+      case "video":
+        return "videos";
+      case "image":
+        return "images";
+      case "audio":
+        return "audios";
+      case "document":
+        return "documents";
+      default:
+        return "";
+    }
   };
 
   const renderAndStore = (url, fileType, isCached, latency) => {
     const statusMessage = isCached
       ? "You are now accessing cached data!"
-      : "This content was retrieved from our primary database.";
+      : "This content was retrieved from the origin server.";
 
     let renderComponent;
 
@@ -46,8 +62,45 @@ function App() {
           </>
         );
         break;
+
+        case "audio":
+          renderComponent = (
+            <>
+              <p>{statusMessage}</p>
+              <audio controls>
+                <source src={url} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+              <p>Latency: {latency}ms</p>
+            </>
+          );
+          break;
+        
+
+      case "image":
+        renderComponent = (
+          <>
+            <p>{statusMessage}</p>
+            <img src={url} alt={contentId} style={{ maxWidth: "100%" }} />
+            <p>Latency: {latency}ms</p>
+          </>
+        );
+        break;
+
+      case "document":
+        renderComponent = (
+          <>
+            <p>{statusMessage}</p>
+            <a href={url} download style={{ color: "#61dafb" }}>
+              Click to download {contentId}
+            </a>
+            <p>Latency: {latency}ms</p>
+          </>
+        );
+        break;
+
       default:
-        renderComponent = "Content not found or unsupported type.";
+        renderComponent = "Unsupported file type.";
     }
 
     setContent(renderComponent);
@@ -66,29 +119,31 @@ function App() {
   const fetchContent = async () => {
     setLoading(true);
     const fileType = getFileType(contentId);
-    const basePath =
-      fileType === "video" ? getVideoS3Url(contentId) : "/" + contentId;
+    const folder = getS3Path(fileType);
+    const encodedId = encodeURIComponent(contentId);
+    const fileUrl = `${s3BaseUrl}/${folder}/${encodedId}`;
     const isCached = cache[contentId];
     const start = performance.now();
 
     if (isCached) {
       requestAnimationFrame(() => {
         const latency = Math.round(performance.now() - start);
-        renderAndStore(basePath, fileType, true, latency);
+        renderAndStore(fileUrl, fileType, true, latency);
       });
     } else {
       setTimeout(() => {
         const latency = Math.round(performance.now() - start);
-        renderAndStore(basePath, fileType, false, latency);
-      }, 500);
+        renderAndStore(fileUrl, fileType, false, latency);
+      }, 500); // Simulated latency
     }
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>💡Welcome to NovaCDN 🌍</h1>
-        <p>Enter video file name (e.g., CDN Explained.mp4, river.mp4...)</p>
+      <h1> Welcome to Nova🚀CDN </h1>
+
+        <p>Enter a file name (e.g., flow.mp3, CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
 
         <div className="content-request">
           <TextField
@@ -137,17 +192,21 @@ function App() {
       </header>
 
       <footer
-        style={{
-          marginTop: "40px",
-          padding: "20px",
-          textAlign: "center",
-          color: "#000",
-        }}
-      >
-        <p>
-          Project by <strong>Samson Tanimawo</strong>
-        </p>
-      </footer>
+  style={{
+    marginTop: "40px",
+    padding: "20px",
+    textAlign: "center",
+    color: "#000",
+  }}
+>
+  <p style={{ fontSize: "0.95rem", marginTop: "10px" }}>
+  <strong>Project by Samson Tanimawo</strong>
+  </p>
+  <p style={{ fontSize: "0.95rem", marginTop: "10px" }}>
+  <strong>💻 Built with</strong> <strong>React</strong>, <strong>Node.js</strong>, <strong>Docker</strong>, <strong>Kubernetes</strong>, <strong>AWS</strong>, <strong>Nginx</strong>, <strong>Redis</strong>, <strong>Git</strong>, <strong>Prometheus</strong>, <strong>Grafana</strong>, <strong>Splunk</strong>, <strong>and</strong> ❤️
+  </p>
+</footer>
+
     </div>
   );
 }
