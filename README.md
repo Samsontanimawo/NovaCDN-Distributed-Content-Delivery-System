@@ -1,4 +1,4 @@
-# NovaCDN - Content Delivery Network (CDN) with Docker, Kubernetes, Nginx, Node.js, and Redis
+# NovaCDN - Content Delivery Network (CDN) with Docker, Kubernetes, Nginx, Node.js, AWS, and Redis
 
 NovaCDN is a demonstration project designed to showcase a Content Delivery Network (CDN) built with modern technologies such as Docker, Nginx, Node.js, and Redis. It simulates edge nodes for caching and load balancing, and demonstrates how to deploy a scalable system to deliver content efficiently across multiple nodes.
 
