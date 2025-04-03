@@ -1,81 +1,131 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #fce4ec);
+}
+
 .App {
   text-align: center;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 80vh;
+  background: linear-gradient(135deg, #0d47a1, #1976d2);
+  width: 100%;
+  max-width: 1000px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 10px;
+  color: #ffeb3b;
 }
 
 p {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  color: #bbdefb;
+  margin-bottom: 30px;
 }
 
 .content-request {
-  width: 80%;
+  width: 100%;
   max-width: 600px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #61dafb;
+  background-color: #ff9800;
+  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #4fa3f7;
+  background-color: #fb8c00;
 }
 
 .content-result {
   margin-top: 20px;
-  padding: 10px;
-  background-color: #333;
+  padding: 25px;
+  background: #424242;
   color: #fff;
-  border-radius: 5px;
-  width: 80%;
-  max-width: 600px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
   word-wrap: break-word;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-result img,
+.content-result video,
+.content-result audio,
+.content-result iframe {
+  margin-top: 15px;
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
 }
 
 .content-history {
-  margin-top: 40px;
-  width: 80%;
+  margin-top: 50px;
+  width: 100%;
   max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .MuiCard-root {
-  background-color: #333;
+  background-color: #37474f;
   color: #fff;
-  padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
 }
 
 .MuiCardContent-root {
-  padding: 10px;
+  padding: 15px;
 }
 
 .MuiTypography-root {
@@ -83,5 +133,5 @@ button:hover {
 }
 
 .MuiCircularProgress-root {
-  color: #ffffff;
+  color: #ffca28;
 }
