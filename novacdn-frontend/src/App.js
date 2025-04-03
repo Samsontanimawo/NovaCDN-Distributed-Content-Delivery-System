@@ -22,28 +22,24 @@ function App() {
     return "text";
   };
 
-  const getFolderPath = (fileType) => {
-    switch (fileType) {
-      case "video":
-        return "/video/";
-      default:
-        return "/";
-    }
+  const getVideoS3Url = (filename) => {
+    return `https://novacdn-videos.s3.amazonaws.com/videos/${encodeURIComponent(filename)}`;
   };
 
-  const renderAndStore = (basePath, fileType, isCached, latency) => {
+  const renderAndStore = (url, fileType, isCached, latency) => {
     const statusMessage = isCached
       ? "You are now accessing cached data!"
       : "This content was retrieved from our primary database.";
 
     let renderComponent;
+
     switch (fileType) {
       case "video":
         renderComponent = (
           <>
             <p>{statusMessage}</p>
             <video controls style={{ maxWidth: "100%" }}>
-              <source src={basePath} type="video/mp4" />
+              <source src={url} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             <p>Latency: {latency}ms</p>
@@ -70,19 +66,17 @@ function App() {
   const fetchContent = async () => {
     setLoading(true);
     const fileType = getFileType(contentId);
-    const folderPath = getFolderPath(fileType);
-    const basePath = folderPath + contentId;
+    const basePath =
+      fileType === "video" ? getVideoS3Url(contentId) : "/" + contentId;
     const isCached = cache[contentId];
     const start = performance.now();
 
     if (isCached) {
-      // Cached: no delay, but measure time to render
       requestAnimationFrame(() => {
         const latency = Math.round(performance.now() - start);
         renderAndStore(basePath, fileType, true, latency);
       });
     } else {
-      // Not cached: simulate DB fetch with delay
       setTimeout(() => {
         const latency = Math.round(performance.now() - start);
         renderAndStore(basePath, fileType, false, latency);
