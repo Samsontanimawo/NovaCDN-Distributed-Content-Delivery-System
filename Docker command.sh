@@ -373,3 +373,8 @@ docker run -d -p 3000:3000 --name my-docker-app docker-app-2020 = http://localho
 
 docker run -d -p 3001:3000 --name my-docker-app docker-app-2020 = http://localhost:3001
 
+docker stop $(docker ps -q) - To stop everything running in Docker at once
+
+docker rm $(docker ps -aq) - To remove all containers
+
+docker-compose down --volumes --remove-orphans - To top and remove everything including containers, networks, volumes, and images created by docker-compose
