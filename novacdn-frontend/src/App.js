@@ -8,6 +8,18 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+  Tooltip,
+} from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip);
 
 function App() {
   const [contentId, setContentId] = useState("");
@@ -17,6 +29,7 @@ function App() {
   const [cache, setCache] = useState({});
   const [stars, setStars] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
+  const [latencyData, setLatencyData] = useState([]); // New chart data
 
   const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
 
@@ -105,6 +118,17 @@ function App() {
         renderComponent = "Unsupported file type.";
     }
 
+    // Update chart data
+    setLatencyData((prev) => [
+      ...prev,
+      {
+        label: contentId,
+        latency,
+        source: isCached ? "Cache" : "Origin",
+        timestamp: new Date().toLocaleTimeString(),
+      },
+    ]);
+
     setContent(renderComponent);
     setCache((prev) => ({ ...prev, [contentId]: true }));
     setContentHistory((prev) => [
@@ -113,8 +137,6 @@ function App() {
     ]);
     setLoading(false);
   };
-
-  // Replace with old function if it doesn't work.
 
   const fetchContent = async () => {
     setHasFetched(true);
@@ -139,12 +161,30 @@ function App() {
     }
   };
 
-  
-  // End of above function
-  
+  // Build chart dataset
+  const chartData = {
+    labels: latencyData.map((d) => d.timestamp),
+    datasets: [
+      {
+        label: "Origin Fetch",
+        data: latencyData.filter((d) => d.source === "Origin").map((d) => d.latency),
+        borderColor: "#ff6f00",
+        backgroundColor: "#ffb74d",
+        tension: 0.4,
+      },
+      {
+        label: "Cache Fetch",
+        data: latencyData.filter((d) => d.source === "Cache").map((d) => d.latency),
+        borderColor: "#00c853",
+        backgroundColor: "#69f0ae",
+        tension: 0.4,
+      },
+    ],
+  };
 
   return (
     <div className="App">
+      {/* Starfield background */}
       <div className="starfield">
         {stars.map((star) => (
           <div
@@ -162,9 +202,7 @@ function App() {
 
       <header className="App-header">
         <h1>
-          Welcome to Nova
-          <span className="bounce-rocket">🚀</span>
-          CDN
+          Welcome to Nova<span className="bounce-rocket">🚀</span>CDN
         </h1>
         <p>Enter a file name (e.g., CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
 
@@ -198,6 +236,12 @@ function App() {
           {content}
         </div>
 
+        {/* New Chart Section */}
+        <div className="chart-container" style={{ marginTop: "50px", background: "#fff", padding: "20px", borderRadius: "10px", maxWidth: "800px", width: "100%" }}>
+          <h2 style={{ color: "#fff", fontWeight: "bold" }}>📊 Latency Comparison</h2>
+          <Line data={chartData} />
+        </div>
+
         <div className="content-history">
           <h2 style={{ color: "#000", fontWeight: "bold" }}>Content History</h2>
           {contentHistory.length > 0 ? (
@@ -218,7 +262,7 @@ function App() {
         </div>
       </header>
 
-      <footer className="App-footer">
+   <footer className="App-footer">
   <div className="footer-container">
     
     {/* Social Media Icons */}
