@@ -226,19 +226,46 @@ iframe {
 }
 
 /* Different colors for each tech */
-.react { color: #fffb00; }
-.node { color: #f700ff; }
+.react { color: #1eff00; }
+.node { color: #e5ff00; }
 .docker { color: #ff1744; }
-.kubernetes { color: #fffb00; }
+.kubernetes { color: #00e257; }
 .aws { color: #ff9900; }
 .nginx { color: #009639; }
 .redis { color: #dc382d; }
-.git { color: #fffb00; }
+.git { color: #00ff62; }
 .prometheus { color: #e6522c; }
 .grafana { color: #fffb00; }
-.splunk { color: #00b140; }
+.splunk { color: #00e257; }
+.bgp { color: #ff1744; }
+.linux { color: #00e257; }
+.dynatrace { color: #fffb00; }
+.python { color: #3bfc00; }
+.javascript { color: #f700ff; }
+.sql { color: #ff1744; }
+.mongodb { color: #fffb00; }
+.newrelic { color: #ff9900; }
+.tcpips{ color: #009639; }
+.unix { color: #dc382d; }
+.cicd { color: #ff0055; }
+.terraform { color: #e6522c; }
+.ansible { color: #fffb00; }
+.agile { color: #00b140; }
+.cdn { color: #ff00dd; }
+.dns { color: #ff0000;; }
+.http { color: #fffb00; }
+.tls { color: #ff1744; }
+.confluence { color: #fffb00; }
+.jira { color: #00e257; }
+.javascript { color: #f700ff; }
+.geneos { color: #ff1744; }
+.odin { color: #fffb00; }
+.wolverine { color: #ff9900; }
+.autosys{ color: #00e257; }
+.jwt { color: #dc382d; }
+.oauth { color: #fffb00; }
 .heart { color: #ff1744; }
-.Laptop  { color: #ffffff; }
+.skills { color: #ffffff; }
 
 @keyframes scroll-left-right {
   0% {

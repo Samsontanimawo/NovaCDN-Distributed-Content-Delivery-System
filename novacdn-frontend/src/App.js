@@ -265,7 +265,7 @@ function App() {
 
         {/* 📊 Chart + Export */}
         <div className="chart-container" style={{ marginTop: "50px", background: "#fff", padding: "20px", borderRadius: "10px", maxWidth: "800px", width: "100%" }}>
-          <h2 style={{ color: "#000", fontWeight: "bold" }}>📊 Latency Comparison</h2>
+          <h2 style={{ color: "#000", fontWeight: "bold" }}>📊 Latency Comparison 📶</h2>
           <Line data={chartData} />
           <div style={{ marginTop: "20px", display: "flex", gap: "10px", justifyContent: "center" }}>
             <Button variant="outlined" onClick={handleExportCSV}>Export CSV</Button>
@@ -276,6 +276,30 @@ function App() {
         {/* Keep rest of your original code intact, including footer */}
       </header>
 
+      <div className="content-history">
+          <h2 style={{ color: "#000000", fontWeight: "bold" }}>Content History</h2>
+
+          {contentHistory.length > 0 ? (
+            contentHistory.map((item, index) => (
+              <Card key={index} sx={{ marginBottom: "15px" }}>
+                <CardContent>
+                  <Typography variant="h6">File: {item.id}</Typography>
+                  <div>{item.content}</div>
+                  <Typography
+                    variant="caption"
+                    sx={{ display: "block", marginTop: "10px" }}
+                  >
+                    {item.timestamp}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <Typography style={{ color: "#fff" }}>
+              No content history available.
+            </Typography>
+          )}
+        </div>
 
    <footer className="App-footer">
   <div className="footer-container">
@@ -305,23 +329,49 @@ function App() {
     </div>
 
     {/* Author Name */}
-    <p className="footer-author">Project by Samson Tanimawo</p>
+    <p className="footer-author">Project by Samson Tanimawo, PhD</p>
 
     {/* Scrolling Tech Stack */}
     <div className="scroll-container">
-      <div className="scrolling-tech-wrapper">
-        <span className="tech-item react">💻Built with</span>
-        <span className="tech-item react">React</span>
-        <span className="tech-item node">Node.js</span>
-        <span className="tech-item docker">Docker</span>
-        <span className="tech-item kubernetes">Kubernetes</span>
+    <div className="scrolling-tech-wrapper">
+        <span className="tech-item skills">💻SKILLS:</span>
+        <span className="tech-item python">PYTHON</span>
+        <span className="tech-item javascript">JAVASCRIPT</span>
+        <span className="tech-item react">REACT</span>
+        <span className="tech-item node">NODE.JS</span>
+        <span className="tech-item docker">DOCKER</span>
+        <span className="tech-item kubernetes">KUBERNETES</span>
         <span className="tech-item aws">AWS</span>
-        <span className="tech-item nginx">Nginx</span>
-        <span className="tech-item redis">Redis</span>
-        <span className="tech-item git">Git</span>
-        <span className="tech-item prometheus">Prometheus</span>
-        <span className="tech-item grafana">Grafana</span>
-        <span className="tech-item splunk">Splunk</span>
+        <span className="tech-item nginx">NGINX</span>
+        <span className="tech-item redis">REDIS</span>
+        <span className="tech-item sql">SQL</span>
+        <span className="tech-item mongodb">MONGODB</span>        
+        <span className="tech-item prometheus">PROMETHEUS</span>
+        <span className="tech-item grafana">GRAFANA</span>
+        <span className="tech-item splunk">SPLUNK</span>
+        <span className="tech-item newrelic">NEW RELIC</span>
+        <span className="tech-item linux">LINUX</span>
+        <span className="tech-item unix">UNIX</span>
+        <span className="tech-item dynatrace">DYNATRACE</span>
+        <span className="tech-item cicd">CI/CD</span>
+        <span className="tech-item git">GIT</span>
+        <span className="tech-item terraform">TERRAFORM</span>
+        <span className="tech-item ansible">ANSIBLE</span>
+        <span className="tech-item agile">AGILE</span>        
+        <span className="tech-item dns">DNS</span>
+        <span className="tech-item cdn">CDN</span>
+        <span className="tech-item http">HTTP/HTTPS</span>
+        <span className="tech-item tcpips">TCP/IPS</span>
+        <span className="tech-item bgp">BGP</span>
+        <span className="tech-item tls">TLS</span>
+        <span className="tech-item confluence">CONFLUENCE</span>
+        <span className="tech-item jira">JIRA</span>
+        <span className="tech-item geneos">GENEOS</span>
+        <span className="tech-item wolverine">WOLVERINE</span>
+        <span className="tech-item odin">ODIN</span>
+        <span className="tech-item autosys">AUTOSYS</span>
+        <span className="tech-item jwt">JWT</span>
+        <span className="tech-item oauth">OAuth 2.0</span>
         <span className="tech-item heart">❤️</span>
       </div>
     </div>
