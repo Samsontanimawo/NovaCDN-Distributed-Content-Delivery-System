@@ -205,13 +205,50 @@ iframe {
   margin-top: 8px;
 }
 
-.scrolling-tech {
+.scroll-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-top: 8px;
+}
+
+.scrolling-tech-wrapper {
   display: inline-block;
   padding-left: 100%;
-  font-weight: bold;
-  color: white;
   animation: scroll-left-right 20s linear infinite;
+  font-weight: bold;
 }
+
+.tech-item {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 1rem;
+}
+
+/* Different colors for each tech */
+.react { color: #fffb00; }
+.node { color: #f700ff; }
+.docker { color: #ff1744; }
+.kubernetes { color: #fffb00; }
+.aws { color: #ff9900; }
+.nginx { color: #009639; }
+.redis { color: #dc382d; }
+.git { color: #fffb00; }
+.prometheus { color: #e6522c; }
+.grafana { color: #fffb00; }
+.splunk { color: #00b140; }
+.heart { color: #ff1744; }
+.Laptop  { color: #ffffff; }
+
+@keyframes scroll-left-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 
 @keyframes scroll-left-right {
   0% {
@@ -234,4 +271,31 @@ iframe {
 .bounce-rocket {
   display: inline-block;
   animation: bounceRocket 1.5s ease-in-out infinite;
+}
+
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+
+.social-icon {
+  width: 28px;
+  height: 28px;
+  fill: #ffffff;
+  transition: fill 0.3s ease;
+}
+
+.social-icon:hover {
+  fill: #f7e122;
+}
+
+.linkedin-icon:hover {
+  fill: #00ff0d;
+}
+
+.github-icon:hover {
+  fill: #ffee00;
 }

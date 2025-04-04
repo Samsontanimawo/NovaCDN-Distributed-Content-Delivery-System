@@ -16,7 +16,7 @@ function App() {
   const [contentHistory, setContentHistory] = useState([]);
   const [cache, setCache] = useState({});
   const [stars, setStars] = useState([]);
-  const [hasFetched, setHasFetched] = useState(false); // Placeholder toggle
+  const [hasFetched, setHasFetched] = useState(false);
 
   const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
 
@@ -42,16 +42,11 @@ function App() {
 
   const getS3Path = (type) => {
     switch (type) {
-      case "video":
-        return "videos";
-      case "image":
-        return "images";
-      case "audio":
-        return "audios";
-      case "document":
-        return "documents";
-      default:
-        return "";
+      case "video": return "videos";
+      case "image": return "images";
+      case "audio": return "audios";
+      case "document": return "documents";
+      default: return "";
     }
   };
 
@@ -61,7 +56,6 @@ function App() {
       : "This content was retrieved from the origin server.";
 
     let renderComponent;
-
     switch (fileType) {
       case "video":
         renderComponent = (
@@ -75,7 +69,6 @@ function App() {
           </>
         );
         break;
-
       case "audio":
         renderComponent = (
           <>
@@ -88,7 +81,6 @@ function App() {
           </>
         );
         break;
-
       case "image":
         renderComponent = (
           <>
@@ -98,7 +90,6 @@ function App() {
           </>
         );
         break;
-
       case "document":
         renderComponent = (
           <>
@@ -110,7 +101,6 @@ function App() {
           </>
         );
         break;
-
       default:
         renderComponent = "Unsupported file type.";
     }
@@ -119,14 +109,12 @@ function App() {
     setCache((prev) => ({ ...prev, [contentId]: true }));
     setContentHistory((prev) => [
       ...prev,
-      {
-        id: contentId,
-        content: renderComponent,
-        timestamp: new Date().toLocaleString(),
-      },
+      { id: contentId, content: renderComponent, timestamp: new Date().toLocaleString() },
     ]);
     setLoading(false);
   };
+
+  // Replace with old function if it doesn't work.
 
   const fetchContent = async () => {
     setHasFetched(true);
@@ -151,9 +139,12 @@ function App() {
     }
   };
 
+  
+  // End of above function
+  
+
   return (
     <div className="App">
-      {/* Animated Star Background */}
       <div className="starfield">
         {stars.map((star) => (
           <div
@@ -175,17 +166,9 @@ function App() {
           <span className="bounce-rocket">🚀</span>
           CDN
         </h1>
-        <p>Enter a file name (e.g., flow.mp3, CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
+        <p>Enter a file name (e.g., CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
 
-        <div
-          className="content-request"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop: "40px",
-          }}
-        >
+        <div className="content-request" style={{ marginTop: "40px" }}>
           <TextField
             label={!hasFetched ? "Enter File Name" : ""}
             placeholder={!hasFetched ? "Enter file name" : ""}
@@ -194,20 +177,12 @@ function App() {
             onChange={(e) => setContentId(e.target.value)}
             fullWidth
             style={{ maxWidth: "400px" }}
-            InputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
+            InputProps={{ style: { textAlign: "center" } }}
             InputLabelProps={{
-              style: {
-                left: "50%",
-                transform: "translateX(-50%)",
-              },
+              style: { left: "50%", transform: "translateX(-50%)" },
               shrink: false,
             }}
           />
-
           <Button
             variant="contained"
             onClick={fetchContent}
@@ -224,42 +199,76 @@ function App() {
         </div>
 
         <div className="content-history">
-          <h2 style={{ color: "#000000", fontWeight: "bold" }}>Content History</h2>
-
+          <h2 style={{ color: "#000", fontWeight: "bold" }}>Content History</h2>
           {contentHistory.length > 0 ? (
             contentHistory.map((item, index) => (
               <Card key={index} sx={{ marginBottom: "15px" }}>
                 <CardContent>
                   <Typography variant="h6">File: {item.id}</Typography>
                   <div>{item.content}</div>
-                  <Typography
-                    variant="caption"
-                    sx={{ display: "block", marginTop: "10px" }}
-                  >
+                  <Typography variant="caption" sx={{ display: "block", marginTop: "10px" }}>
                     {item.timestamp}
                   </Typography>
                 </CardContent>
               </Card>
             ))
           ) : (
-            <Typography style={{ color: "#fff" }}>
-              No content history available.
-            </Typography>
+            <Typography style={{ color: "#fff" }}>No content history available.</Typography>
           )}
         </div>
       </header>
 
       <footer className="App-footer">
-        <div className="footer-container">
-          <p className="footer-author">Project by Samson Tanimawo</p>
-          <div className="scroll-container">
-            <p className="scrolling-tech">
-              💻 Built with React, Node.js, Docker, Kubernetes, AWS, Nginx, Redis, Git,
-              Prometheus, Grafana, Splunk, and ❤️
-            </p>
-          </div>
-        </div>
-      </footer>
+  <div className="footer-container">
+    
+    {/* Social Media Icons */}
+    <div className="social-links">
+      <a
+        href="https://www.linkedin.com/in/tanimawo/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+      >
+        <svg className="social-icon linkedin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0V8zm7.5 0h4.5v2.2h.1c.63-1.2 2.17-2.45 4.47-2.45 4.78 0 5.67 3.14 5.67 7.22V23h-5v-6.6c0-1.57-.03-3.6-2.2-3.6-2.2 0-2.53 1.72-2.53 3.5V23h-5V8z" />
+        </svg>
+      </a>
+      <a
+        href="https://github.com/Samsontanimawo"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+      >
+        <svg className="social-icon github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.38 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.52-2.56-.29-5.26-1.28-5.26-5.72 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.96.13 2.9.39 2.2-1.49 3.18-1.18 3.18-1.18.62 1.57.23 2.73.11 3.02.73.81 1.18 1.84 1.18 3.1 0 4.45-2.7 5.43-5.27 5.72.41.35.78 1.03.78 2.08v3.09c0 .31.21.67.79.56A10.5 10.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z" />
+        </svg>
+      </a>
+    </div>
+
+    {/* Author Name */}
+    <p className="footer-author">Project by Samson Tanimawo</p>
+
+    {/* Scrolling Tech Stack */}
+    <div className="scroll-container">
+      <div className="scrolling-tech-wrapper">
+        <span className="tech-item react">💻Built with</span>
+        <span className="tech-item react">React</span>
+        <span className="tech-item node">Node.js</span>
+        <span className="tech-item docker">Docker</span>
+        <span className="tech-item kubernetes">Kubernetes</span>
+        <span className="tech-item aws">AWS</span>
+        <span className="tech-item nginx">Nginx</span>
+        <span className="tech-item redis">Redis</span>
+        <span className="tech-item git">Git</span>
+        <span className="tech-item prometheus">Prometheus</span>
+        <span className="tech-item grafana">Grafana</span>
+        <span className="tech-item splunk">Splunk</span>
+        <span className="tech-item heart">❤️</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
     </div>
   );
 }
