@@ -19,3 +19,4 @@ NovaCDN is a demonstration project designed to showcase a Content Delivery Netwo
 - **Load Balancing**: Nginx handles load balancing between the backend and frontend services, ensuring high availability and fault tolerance.
 - **Redis Caching**: Redis is used to cache the backend data, reducing latency and improving response times.
 # NovaCDN-Distributed-Content-Delivery-System
+

@@ -1,21 +1,20 @@
-version: '3.7'  # Use version 3.7 or later to support the deploy section
+version: '3.7'
 
 services:
   # Backend Service
   backend:
     build:
       context: ./backend
-    
     depends_on:
       - redis
     networks:
       - backend_network
     deploy:
-      replicas: 10  # Scale backend to 10 instances (only works in Docker Swarm mode)
-      
+      replicas: 10  # Scale backend to 10 instances (requires Docker Swarm)
+
   # Redis Service
   redis:
-    image: redis:latest  # Use the official Redis image
+    image: redis:latest
     container_name: redis
     networks:
       - backend_network
@@ -23,95 +22,97 @@ services:
   # Frontend Service
   frontend:
     build:
-      context: ./novacdn-frontend  
-    ports:
-      - "80:80"           # Expose frontend on port 80
+      context: ./novacdn-frontend
     depends_on:
       - backend
     networks:
       - backend_network
+    deploy:
+      replicas: 10  # Scale frontend to 10 instances (requires Docker Swarm)
+    # ⚠️ Remove ports mapping to avoid conflicts when scaling
+    # Access through Nginx
 
-  # Nginx Service for Reverse Proxy and Load Balancing
+  # Nginx Reverse Proxy
   nginx:
     image: nginx:latest
     container_name: nginx
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf 
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - "8080:80"  # Expose Nginx on port 8080
+      - "8080:80"  # Expose app through Nginx
     depends_on:
-      - backend
       - frontend
+      - backend
     networks:
       - backend_network
 
-  # Edge Nodes (Simulated CDN Caching Servers)
+  # Edge Nodes (Simulated CDN)
   node1:
     build:
-      context: ./novacdn-nodes/node1  # Path to node1 folder
+      context: ./novacdn-nodes/node1
     networks:
       - backend_network
       - edge_network
 
   node2:
     build:
-      context: ./novacdn-nodes/node2  # Path to node2 folder
+      context: ./novacdn-nodes/node2
     networks:
       - backend_network
       - edge_network
 
   node3:
     build:
-      context: ./novacdn-nodes/node3  # Path to node3 folder
+      context: ./novacdn-nodes/node3
     networks:
       - backend_network
       - edge_network
 
   node4:
     build:
-      context: ./novacdn-nodes/node4  # Path to node4 folder
+      context: ./novacdn-nodes/node4
     networks:
       - backend_network
       - edge_network
 
   node5:
     build:
-      context: ./novacdn-nodes/node5  # Path to node5 folder
+      context: ./novacdn-nodes/node5
     networks:
       - backend_network
       - edge_network
 
   node6:
     build:
-      context: ./novacdn-nodes/node6  # Path to node6 folder
+      context: ./novacdn-nodes/node6
     networks:
       - backend_network
       - edge_network
 
   node7:
     build:
-      context: ./novacdn-nodes/node7  # Path to node7 folder
+      context: ./novacdn-nodes/node7
     networks:
       - backend_network
       - edge_network
 
   node8:
     build:
-      context: ./novacdn-nodes/node8  # Path to node8 folder
+      context: ./novacdn-nodes/node8
     networks:
       - backend_network
       - edge_network
 
   node9:
     build:
-      context: ./novacdn-nodes/node9  # Path to node9 folder
+      context: ./novacdn-nodes/node9
     networks:
       - backend_network
       - edge_network
 
   node10:
     build:
-      context: ./novacdn-nodes/node10  # Path to node10 folder
+      context: ./novacdn-nodes/node10
     networks:
       - backend_network
       - edge_network
