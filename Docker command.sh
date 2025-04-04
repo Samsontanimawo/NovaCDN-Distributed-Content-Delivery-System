@@ -129,3 +129,247 @@ docker rm $(docker ps -aq)	              Remove all containers
 docker rmi $(docker images -q)	              Remove all images
 docker volume prune	Remove all unused volumes
 docker system prune -a	               Remove all unused data (images, containers, networks)
+
+
+
+# Comprehensive Docker Commands
+
+This README contains a comprehensive list of Docker commands for managing containers, images, networks, and other aspects of containerization.
+
+## Installation
+
+To install Docker on a Debian-based system (like Ubuntu):
+
+```bash
+sudo apt update
+sudo apt install docker.io docker-compose
+```
+
+## Common Commands
+
+- **Run a new container from an image:**
+  ```bash
+  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+  ```
+
+- **Execute a command in a running container:**
+  ```bash
+  docker exec -it CONTAINER_NAME COMMAND
+  ```
+
+- **List all containers (including stopped ones):**
+  ```bash
+  docker ps -a
+  ```
+
+- **Build an image from a Dockerfile:**
+  ```bash
+  docker build -t IMAGE_NAME PATH_TO_DOCKERFILE
+  ```
+
+- **Download an image from a registry:**
+  ```bash
+  docker pull IMAGE_NAME
+  ```
+
+- **Upload an image to a registry:**
+  ```bash
+  docker push IMAGE_NAME
+  ```
+
+- **List images:**
+  ```bash
+  docker images
+  ```
+
+- **Authenticate to a registry:**
+  ```bash
+  docker login
+  ```
+
+- **Log out from a registry:**
+  ```bash
+  docker logout
+  ```
+
+- **Search Docker Hub for images:**
+  ```bash
+  docker search SEARCH_TERM
+  ```
+
+- **Show the Docker version information:**
+  ```bash
+  docker version
+  ```
+
+- **Display system-wide information:**
+  ```bash
+  docker info
+  ```
+
+## Management Commands
+
+- **Manage containers:**
+  ```bash
+  docker container [OPTIONS] COMMAND
+  ```
+
+- **Manage images:**
+  ```bash
+  docker image [OPTIONS] COMMAND
+  ```
+
+- **Manage networks:**
+  ```bash
+  docker network [OPTIONS] COMMAND
+  ```
+
+- **Manage volumes:**
+  ```bash
+  docker volume [OPTIONS] COMMAND
+  ```
+
+## Swarm Commands
+
+- **Initialize a swarm:**
+  ```bash
+  docker swarm init
+  ```
+
+- **Join a swarm:**
+  ```bash
+  docker swarm join --token TOKEN MANAGER-IP:PORT
+  ```
+
+- **Manage Swarm services:**
+  ```bash
+  docker service [OPTIONS] COMMAND
+  ```
+
+## Miscellaneous Commands
+
+- **Create a new container:**
+  ```bash
+  docker create IMAGE
+  ```
+
+- **Remove one or more containers:**
+  ```bash
+  docker rm CONTAINER_ID
+  ```
+
+- **Remove one or more images:**
+  ```bash
+  docker rmi IMAGE_ID
+  ```
+
+- **View logs of a container:**
+  ```bash
+  docker logs CONTAINER_ID
+  ```
+
+- **Stop one or more running containers:**
+  ```bash
+  docker stop CONTAINER_ID
+  ```
+
+- **Start one or more stopped containers:**
+  ```bash
+  docker start CONTAINER_ID
+  ```
+
+- **Update an existing container:**
+  ```bash
+  docker update [OPTIONS] CONTAINER
+  ```
+
+- **Rename a container:**
+  ```bash
+  docker rename OLD_NAME NEW_NAME
+  ```
+
+- **Fetch resource usage statistics of containers:**
+  ```bash
+  docker stats
+  ```
+
+- **View the top processes running in a container:**
+  ```bash
+  docker top CONTAINER_ID
+  ```
+
+- **Copy files/folders between a container and the local filesystem:**
+  ```bash
+  docker cp CONTAINER_ID:SOURCE_PATH DESTINATION_PATH
+  ```
+
+- **Pause a running container:**
+  ```bash
+  docker pause CONTAINER_ID
+  ```
+
+- **Unpause a paused container:**
+  ```bash
+  docker unpause CONTAINER_ID
+  ```
+
+- **Export a container's filesystem as a tar archive:**
+  ```bash
+  docker export CONTAINER_ID > exported_container.tar
+  ```
+
+- **Import a tarball to create a new filesystem image:**
+  ```bash
+  docker import exported_container.tar
+  ```
+
+## Global Options
+
+- **Run a command with debug mode:**
+  ```bash
+  docker --debug COMMAND
+  ```
+
+- **Set the logging level:**
+  ```bash
+  docker --log-level LEVEL COMMAND
+  ```
+
+## Cleanup Commands
+
+- **Remove all stopped containers:**
+  ```bash
+  docker container prune
+  ```
+
+- **Remove all unused images:**
+  ```bash
+  docker image prune
+  ```
+
+- **Remove all unused volumes:**
+  ```bash
+  docker volume prune
+  ```
+
+- **Remove all unused networks:**
+  ```bash
+  docker network prune
+  ```
+
+## Running Docker without sudo
+
+To run Docker commands without sudo, you can add your user to the Docker group:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+You will need to log out and log back in for the changes to take effect.
+
+Run 'docker COMMAND --help' for more information on a command.
+
+docker run -d -p 3000:3000 --name my-docker-app docker-app-2020 = http://localhost:3000
+
+docker run -d -p 3001:3000 --name my-docker-app docker-app-2020 = http://localhost:3001
+
