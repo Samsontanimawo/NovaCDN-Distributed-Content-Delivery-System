@@ -5,3 +5,4 @@
 5. ./git-push.sh
 6. ./serve-frontend.sh
 
+find . -type f -name "*.sh" -exec chmod +x "{}" \; = Find and make all .sh files executable
