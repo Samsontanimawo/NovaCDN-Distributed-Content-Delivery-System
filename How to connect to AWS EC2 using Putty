@@ -14,6 +14,7 @@ Open PuTTY and configure the session:
 Host Name: ec2-user@<public-ip>
 
 Example: ec2-user@54.210.123.45
+ec2-user@13.217.223.190
 
 Port: 22
 
