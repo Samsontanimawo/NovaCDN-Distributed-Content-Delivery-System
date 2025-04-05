@@ -76,6 +76,13 @@ Check it out in http://localhost:8080
 
 Nginx is routing traffic to the only available frontend container.
 
+# Build Without Cache (Recommended for Fresh Builds)
+docker-compose build --no-cache frontend backend
+
+# Scale and Run in Detached Mode - 20 NODES
+docker-compose up -d --scale frontend=20 --scale backend=20
+
+
 The frontend is connecting to the backend and Redis internally via Docker’s network.
 
 COMMAND TO BRING UP 3 nodes each
@@ -373,8 +380,18 @@ docker run -d -p 3000:3000 --name my-docker-app docker-app-2020 = http://localho
 
 docker run -d -p 3001:3000 --name my-docker-app docker-app-2020 = http://localhost:3001
 
-docker stop $(docker ps -q) - To stop everything running in Docker at once
+docker stop $(docker ps -q) = To stop everything running in Docker at once
 
-docker rm $(docker ps -aq) - To remove all containers
+docker rm $(docker ps -aq) = To remove all containers
 
-docker-compose down --volumes --remove-orphans - To top and remove everything including containers, networks, volumes, and images created by docker-compose
+docker rmi $(docker images -q) -f = Remove All Docker Images (Fresh Build)
+
+docker builder prune -a --force = Clear Build Cache Too
+
+
+docker-compose down --volumes --remove-orphans = To top and remove everything including containers, networks, volumes, and images created by docker-compose
+
+docker-compose build --no-cache = Rebuild Everything Without Cache
+
+docker-compose up -d = Bring Everything Up
+

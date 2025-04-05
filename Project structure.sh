@@ -22,3 +22,4 @@ NOVACDN/
 │   └── README.md                  # Documentation for frontend setup
 ├── docker-compose.yml             # Docker Compose configuration for local setup
 └── README.md                      # Documentation for the entire project
+└── AWS                            # Storage
