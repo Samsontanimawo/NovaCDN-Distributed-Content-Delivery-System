@@ -13,7 +13,7 @@ NOVACDN/
 │   ├── nginx-deployment.yml       # Deployment config for Nginx
 │   ├── nginx-service.yml          # Service config for Nginx
 │   ├── redis-deployment.yml       # Redis deployment configuration
-│   ├── redis-service.yml          # Redis service configuration
+│   ├── redis-service.yml          # Redis service configuration | REDIS = REMOTE DICTIONARY SERVER
 ├── novacdn-frontend/              # Frontend application files
 │   ├── Dockerfile                 # Dockerfile for frontend
 │   ├── public/                    # Public assets (images, icons, etc.) - Transferred to AWS.
@@ -22,4 +22,4 @@ NOVACDN/
 │   └── README.md                  # Documentation for frontend setup
 ├── docker-compose.yml             # Docker Compose configuration for local setup
 └── README.md                      # Documentation for the entire project
-└── AWS                            # Storage
+└── AWS                            # S3, EC2, VPC, EKS, CloudFront, Cloud Watch, etc.
