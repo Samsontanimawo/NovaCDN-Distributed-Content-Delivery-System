@@ -37,13 +37,13 @@ function App() {
 
   const allowedFiles = [
     "CDN Explained.mp4",
-    "Resume.pdf",
+    "resume.pdf",
     "cdn.png",
     "cdn1.png",
-    "cdn2.jpg",
-    "cdn3.webp",
+    "msc diploma.jpg",
+    "mba diploma.jpeg",
     "cdn4.png",
-      "demoAudio.mp3",
+    "demoAudio.mp3",
     "data.csv"
   ];
 
@@ -251,7 +251,7 @@ function App() {
         <h1>
           Welcome to Nova<span className="bounce-rocket">🚀</span>CDN
         </h1>
-        <p>Enter a file name (e.g., CDN Explained.mp4, Resume.pdf, cdn.png...)</p>
+        <p>Enter a file name (e.g., CDN Explained.mp4, resume.pdf, msc diploma.jpg...)</p>
 
         <div className="content-request" style={{ marginTop: "40px" }}>
           <TextField
