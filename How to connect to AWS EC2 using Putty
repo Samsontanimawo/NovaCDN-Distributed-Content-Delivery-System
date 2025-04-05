@@ -1,0 +1,24 @@
+How to Connect Using PuTTY (to existing EC2)
+Convert your .pem key to .ppk (if not done already):
+
+Open PuTTYgen.
+
+Click Load, and select your .pem file.
+
+Click Save private key (no passphrase unless you want one).
+
+This saves a .ppk file PuTTY can use.
+
+Open PuTTY and configure the session:
+
+Host Name: ec2-user@<public-ip>
+
+Example: ec2-user@54.210.123.45
+
+Port: 22
+
+Connection → SSH → Auth → Browse for your .ppk file.
+
+(Optional) Save the session config for reuse.
+
+Click "Open" to connect.
