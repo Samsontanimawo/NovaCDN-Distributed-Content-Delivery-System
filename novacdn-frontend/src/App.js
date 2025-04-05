@@ -137,16 +137,30 @@ function App() {
     setLoading(false);
   };
 
+
+  // FETCH FUNCTION
   const fetchContent = async () => {
     setHasFetched(true);
     setLoading(true);
+  
+    const allowedFiles = ["CDN Explained.mp4", "Resume.pdf", "cdn.png"];
+    if (!allowedFiles.includes(contentId)) {
+      setLoading(false);
+      setContent(
+        <p style={{ color: "red" }}>
+          ❌ File "{contentId}" is not available on the server.
+        </p>
+      );
+      return;
+    }
+  
     const fileType = getFileType(contentId);
     const folder = getS3Path(fileType);
     const encodedId = encodeURIComponent(contentId);
     const fileUrl = `${s3BaseUrl}/${folder}/${encodedId}`;
     const isCached = cache[contentId];
     const start = performance.now();
-
+  
     if (isCached) {
       requestAnimationFrame(() => {
         const latency = Math.round(performance.now() - start);
@@ -159,6 +173,8 @@ function App() {
       }, 500);
     }
   };
+
+  
 
   // Chart config
   const chartData = {

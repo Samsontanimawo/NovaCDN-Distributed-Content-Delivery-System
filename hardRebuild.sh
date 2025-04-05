@@ -18,5 +18,5 @@ docker-compose up -d
 echo "✅ Rebuild complete!"
 
 
-# chmod +x rebuild.sh
-# ./rebuild.sh
+# chmod +x hardRebuild.sh
+# ./hardRebuild.sh
