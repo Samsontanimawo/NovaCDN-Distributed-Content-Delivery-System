@@ -35,6 +35,18 @@ function App() {
 
   const s3BaseUrl = "https://novacdn-files.s3.amazonaws.com";
 
+  const allowedFiles = [
+    "CDN Explained.mp4",
+    "Resume.pdf",
+    "cdn.png",
+    "cdn1.png",
+    "cdn2.jpg",
+    "cdn3.webp",
+    "cdn4.png",
+      "demoAudio.mp3",
+    "data.csv"
+  ];
+
   useEffect(() => {
     const generatedStars = Array.from({ length: 150 }, (_, i) => ({
       id: i,
@@ -137,13 +149,10 @@ function App() {
     setLoading(false);
   };
 
-
-  // FETCH FUNCTION
   const fetchContent = async () => {
     setHasFetched(true);
     setLoading(true);
-  
-    const allowedFiles = ["CDN Explained.mp4", "Resume.pdf", "cdn.png"];
+
     if (!allowedFiles.includes(contentId)) {
       setLoading(false);
       setContent(
@@ -153,14 +162,14 @@ function App() {
       );
       return;
     }
-  
+
     const fileType = getFileType(contentId);
     const folder = getS3Path(fileType);
     const encodedId = encodeURIComponent(contentId);
     const fileUrl = `${s3BaseUrl}/${folder}/${encodedId}`;
     const isCached = cache[contentId];
     const start = performance.now();
-  
+
     if (isCached) {
       requestAnimationFrame(() => {
         const latency = Math.round(performance.now() - start);
@@ -174,9 +183,6 @@ function App() {
     }
   };
 
-  
-
-  // Chart config
   const chartData = {
     labels: latencyData.map((d) => d.timestamp),
     datasets: [
@@ -197,7 +203,6 @@ function App() {
     ],
   };
 
-  // Export CSV
   const handleExportCSV = () => {
     const csvRows = [
       ["File", "Latency (ms)", "Source", "Timestamp"],
@@ -213,7 +218,6 @@ function App() {
     document.body.removeChild(link);
   };
 
-  // Export PDF
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(14);
@@ -279,7 +283,6 @@ function App() {
           {content}
         </div>
 
-        {/* 📊 Chart + Export */}
         <div className="chart-container" style={{ marginTop: "50px", background: "#fff", padding: "20px", borderRadius: "10px", maxWidth: "800px", width: "100%" }}>
           <h2 style={{ color: "#000", fontWeight: "bold" }}>📊 Latency Comparison 📶</h2>
           <Line data={chartData} />
@@ -288,8 +291,6 @@ function App() {
             <Button variant="outlined" onClick={handleExportPDF}>Export PDF</Button>
           </div>
         </div>
-
-        {/* Keep rest of your original code intact, including footer */}
       </header>
 
       <div className="content-history">

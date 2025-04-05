@@ -9,11 +9,30 @@ ssh -i your-key.pem ec2-user@your-ec2-public-ip
 
 3. Install Docker & Docker Compose
  # Amazon Linux 2
-sudo yum update -y
-sudo amazon-linux-extras install docker
-sudo service docker start
-sudo usermod -aG docker ec2-user
+# 1. Update your system
+sudo dnf update -y
+
+# 2. Install Docker using dnf
+sudo dnf install -y docker
+
+# 3. Start Docker service
+sudo systemctl start docker
+
+# 4. Enable Docker to start on boot
+sudo systemctl enable docker
+
+# 5. Create the docker group (if it doesn't exist)
+sudo groupadd docker
+
+# 6. Add your user to the docker group
+sudo usermod -aG docker $USER
+
+# 7. Apply the group change
 newgrp docker
+
+# 8. Test Docker
+docker run hello-world
+
 
 # Docker Compose
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose

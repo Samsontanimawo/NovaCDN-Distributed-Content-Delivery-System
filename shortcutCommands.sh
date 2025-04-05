@@ -4,3 +4,4 @@
 4. ./hardRebuild.sh
 5. ./git-push.sh
 6. ./serve-frontend.sh
+
